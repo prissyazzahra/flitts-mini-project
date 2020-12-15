@@ -1,0 +1,23 @@
+.card {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 1em;
+  width: 30%;
+}
+
+.rating {
+  background-color: orangered;
+  color: white;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  left: 0;
+}
+
+@media screen and (max-width: 650px) {
+  .card {
+    width: 100%;
+  }
+}
