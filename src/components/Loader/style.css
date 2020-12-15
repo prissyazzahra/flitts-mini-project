@@ -1,0 +1,7 @@
+.card-skeleton {
+  border: none;
+  border-radius: 5px;
+  margin: 1em;
+  position: relative;
+  width: 30%;
+}

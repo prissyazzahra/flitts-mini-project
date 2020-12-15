@@ -2,19 +2,75 @@
   border: 1px solid lightgray;
   border-radius: 5px;
   margin: 1em;
+  position: relative;
   width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .rating {
-  background-color: orangered;
+  background: linear-gradient(180deg, orangered, orange);
   color: white;
+  box-shadow: 0px 5px 5px 0px #E5E5E5;
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  position: relative;
+  position: absolute;
   z-index: 2;
-  left: 0;
+  right: 5%;
+  transform: translateY(-60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.details {
+  padding: 0.5em;
+}
+
+.disabled {
+  background-color: lightgrey;
+  color: grey;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.active {
+  background-color: orangered;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.active:hover {
+  background-color: red;
+  color: lightgrey;
+  transition: 1s;
+}
+
+.no-image {
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  padding: 0.5em 1em;
+  font-family: inherit;
+  border: none;
+}
+
+img {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
 
 @media screen and (max-width: 650px) {
   .card {
