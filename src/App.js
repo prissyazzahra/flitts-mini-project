@@ -3,18 +3,20 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import MovieList from './containers/MovieList';
 import "./App.css";
+
+import MovieList from './containers/MovieList';
+import MovieDetail from './containers/MovieDetail';
 
 function App() {
   return (
     <div className="container">
       <Router>
           <Switch>
-            <Route path="/" component={MovieList} />
+            <Route exact path="/" component={MovieList} />
           </Switch>
           <Switch>
-            <Route path="/:movieId" />
+            <Route exact path="/:movieId" component={MovieDetail} />
           </Switch>
       </Router>
     </div>

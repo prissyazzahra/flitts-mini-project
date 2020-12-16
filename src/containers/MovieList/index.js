@@ -1,13 +1,11 @@
 import React from 'react';
-import Axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import MovieCard from '../../components/MovieCard';
 import Loader from '../../components/Loader';
 
 import './style.css';
-
-const moviesURL = 'https://api.themoviedb.org/3/movie/now_playing?api_key=219ae73877170440917f8f6ce8116a2e&language=en-US&page=1&region=ID';
+import api from '../../api';
 
 class MovieList extends React.Component {
   constructor() {
@@ -23,14 +21,22 @@ class MovieList extends React.Component {
     this.buyMovie = this.buyMovie.bind(this);
     this.getMovieRate = this.getMovieRate.bind(this);
     this.checkIfMovieBought = this.checkIfMovieBought.bind(this);
+    this.fetchMoreData = this.fetchMoreData.bind(this);
+    this.generateLink = this.generateLink.bind(this);
   }
 
   buyMovie = (movie) => {
     const { bought, balance } = this.state;
+    const basePrice = this.getMovieRate(movie.vote_average);
     const newMovieList = bought;
-    newMovieList.push(movie);
-    const price = balance - this.getMovieRate(movie.popularity);
-    this.setState({ bought: newMovieList, balance: price });
+
+    if (balance < basePrice) {
+      alert('You have insufficient balance to buy this movie.');
+    } else {
+      newMovieList.push(movie);
+      const updateBalance = balance - basePrice;
+      this.setState({ bought: newMovieList, balance: updateBalance });
+    }
   }
 
   getMovieRate = (rating) => {
@@ -40,8 +46,10 @@ class MovieList extends React.Component {
       return 8250;
     } else if (rating >= 6 && rating < 8) {
       return 16350;
-    } else {
+    } else if (rating >= 8 && rating < 10) {
       return 21250;
+    } else {
+      return 1000;
     }
   }
 
@@ -58,9 +66,13 @@ class MovieList extends React.Component {
     return bought.includes(movie);
   }
 
+  generateLink = (movie) => {
+    const str = movie.title.replace(/\s+/g, '-').toLowerCase()
+    return movie.id.toString() + '-' + str;
+  }
+
   async loadMovies() {
-    await
-    Axios.get(moviesURL)
+    await api.getMovies()
       .then(res => this.setState({
         movies: res.data.results,
         currentMovies: res.data.results.slice(0, 3),
@@ -74,12 +86,10 @@ class MovieList extends React.Component {
   }
 
   render() {
-    var formatter = new Intl.NumberFormat('en-US', {
+    const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'IDR',
     });
-
-    console.log(this.state.currentMovies.length < this.state.movies.length)
 
     return (
       <>
@@ -90,6 +100,7 @@ class MovieList extends React.Component {
           loader={(
             <Loader />
           )}
+          key={"movie"}
           loadMore={this.fetchMoreData}
           hasMore={this.state.currentMovies.length < this.state.movies.length}
         >
@@ -100,10 +111,12 @@ class MovieList extends React.Component {
                 image={movie.poster_path}
                 title={movie.title}
                 releaseDate={movie.release_date}
-                rating={(movie.popularity).toFixed(2)}
-                price={formatter.format(this.getMovieRate(movie.popularity))}
+                rating={(movie.vote_average).toFixed(2)}
+                price={formatter.format(this.getMovieRate(movie.vote_average))}
                 addMovie={() => this.buyMovie(movie)}
                 isBought={this.checkIfMovieBought(movie)}
+                link={this.generateLink(movie)}
+                showButton={true}
               />
             ))}
           </div>

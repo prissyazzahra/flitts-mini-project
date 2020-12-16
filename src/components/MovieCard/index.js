@@ -1,7 +1,17 @@
 import { Link } from 'react-router-dom';
 import './style.css';
 
-const MovieCard = ({ title, image, releaseDate, rating, link, price, addMovie, isBought }) => {
+const MovieCard = ({
+  title,
+  image,
+  releaseDate,
+  rating,
+  link,
+  price,
+  addMovie,
+  isBought,
+  showButton
+}) => {
   const imageUrl = "http://image.tmdb.org/t/p/w500";
 
   return (
@@ -14,18 +24,18 @@ const MovieCard = ({ title, image, releaseDate, rating, link, price, addMovie, i
             <p>This movie has no poster.</p>
           </div>
         }
-        <div className="rating"><b>{rating}</b></div>
+      </Link>
         <div className="details">
+          <div className="rating"><b>{rating}</b></div>
           <h3>{title}</h3>
           <p>Release date: {releaseDate}</p>
           <h4>{price}</h4>
           {isBought ?
-            <button className="disabled">Bought</button>
+            showButton && <button className="disabled">Bought</button>
           :
-            <button className="active" onClick={addMovie}>Buy</button>
+            showButton && <button className="active" onClick={addMovie}>Buy</button>
           }
         </div>
-      </Link>
     </div>
   );
 }
