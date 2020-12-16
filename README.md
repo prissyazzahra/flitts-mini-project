@@ -16,6 +16,7 @@ Lalu, jalankan aplikasi dengan perintah berikut.
 npm start
 ```
 Jika aplikasi berhasil dijalankan, maka akan *browser* Anda akan membuka aplikasi secara otomatis. Anda bisa mengakses aplikasi ini melalui *port* yang tertera pada terminal, dengan contoh sebagai berikut.
+
 ![Tampilan Terminal](https://i.ibb.co/qgBC2sM/terminal.png)
 
 Sesuai dengan contoh di atas, maka Anda dapat membuka aplikasi dengan memasukkan URL `localhost:3000` pada *browser* Anda.
